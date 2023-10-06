@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run turtlesim headless",
+            "type": "shell",
+            "command": "docker run turtlesim-headless:test"
+        },
+        {
+            "label": "Run turtle_teleop_key",
+            "type": "shell",
+            "command": "docker run -it turtle_teleop_key:test"
+        },
+        {
+            "label": "Build Dockers",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Build turtle_teleop_key", "Build turtlesim-headless"]
+        },
+      {
+        "label": "Build turtle_teleop_key",
+        "type": "shell",
+        "command": "docker build -t turtle_teleop_key:test ./turtle_teleop_key"
+      },
+      {
+        "label": "Build turtlesim-headless",
+        "type": "shell",
+        "command": "docker build -t turtlesim-headless:test ./turtlesim-headless"
+      }
+    ]
+  }

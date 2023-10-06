@@ -1,0 +1,27 @@
+# this dockerfile is just for reference
+FROM ros:foxy AS builder
+WORKDIR /home/<WORKSPACE>/src
+RUN mkdir alba_high_level && \
+    cd alba_high_level && \
+    git init && \
+    git remote add -f origin <URL> && \
+    git config core.sparseCheckout true && \
+    echo "<PATH>" >> .git/info/sparse-checkout && \
+    git pull orign <BRANCH> && \
+    cd ../.. && \
+    . /opt/ros/$ROS_DISTRO/setup.sh && \
+    colcon build --symlink-install --packages-select <PACKAGE-NAME>
+
+FROM ros:foxy
+WORKDIR /home/<WORKSPACE>
+ENV RMW_IMPLEMENTATION=rmw_fastrtps_cpp \
+    ROS_DOMAIN_ID=<DOMAIN_ID>
+COPY --from=builder /home/<WORKSPACE>/build /home/<WORKSPACE>/build
+COPY --from=builder /home/<WORKSPACE>/install /home/<WORKSPACE>/install
+RUN sudo apt update && \
+    apt-get install -y psmisc && \
+    . /opt/ros/$ROS_DISTRO/setup.sh && \
+    rosdep install -y -r -q --from-paths build --ignore-src --rosdistro $ROS_DISTRO && \
+    sed --in-place --expression \
+    '$isource "/home/<WORKSPACE>/install/setup.bash"' /ros_entripoint .sh
+CMD ["ros2", "run", "<PACKAGE>", "<EXECUTABLE>"]
