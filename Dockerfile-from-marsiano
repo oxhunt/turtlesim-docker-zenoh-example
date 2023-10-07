@@ -1,4 +1,4 @@
-# this dockerfile is just for reference
+# this dockerfile is just for reference, it is the one that has been given as an example by one of the previous thesists
 FROM ros:foxy AS builder
 WORKDIR /home/<WORKSPACE>/src
 RUN mkdir alba_high_level && \

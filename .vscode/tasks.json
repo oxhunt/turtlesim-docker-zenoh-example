@@ -1,7 +1,21 @@
 {
     "version": "2.0.0",
     "tasks": [
-        {
+      {
+        "label": "Run zenoh bridge",
+        "type": "shell",
+        "command": "docker run --init --net host eclipse/zenoh-bridge-dds -e tcp/${input:ipAddress}:7447",
+        "args": [
+            "${input:ipAddress}"
+        ],
+        "problemMatcher": []
+    },
+      {
+        "label": "start zenoh router",
+        "type": "shell",
+        "command": "zenohd"
+      },  
+      {
             "label": "Run turtlesim headless",
             "type": "shell",
             "command": "docker run turtlesim-headless:test"
@@ -26,5 +40,13 @@
         "type": "shell",
         "command": "docker build -t turtlesim-headless:test ./turtlesim-headless"
       }
-    ]
+    ],
+    "inputs": [
+    {
+        "id": "ipAddress",
+        "type": "promptString",
+        "description": "Enter IP Address of the Zenoh Router",
+        "default": "127.0.0.1"
+    }
+  ]
   }
