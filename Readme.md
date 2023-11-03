@@ -23,7 +23,7 @@ You need to clone this repo into two different vms:
     - docker run turtlesim-headless:test
     - NOTE: the container runs in headless mode, so no gui will be shown, you can test it is working by looking at the warning messages it creates when the turtle goes out of the playing area (the "clamping" messages).
 7) run this commands on both vms to start the zenoh-bridge-dss containers and connect them to the router:
-    - on CloudVM: docker run --init --net host eclipse/zenoh-bridge-dds -e tcp/<CLOUDVM-IP>:7447
+    - on CloudVM: docker run --init --net host eclipse/zenoh-bridge-dds -e tcp/<<CLOUDVM-IP>>:7447
     - on NattedVM: docker run --init --net host eclipse/zenoh-bridge-dds -e tcp/:7447
 
 
