@@ -14,13 +14,13 @@ You need to clone this repo into two different vms:
 
 # Setup
 1) Install docker in both vms
-2) install the zenoh router: ./install-zenoh-router-setup.sh
+2) install the zenoh router: `./install-zenoh-router-setup.sh`
 3) build the two docker containers using the "Build Dockers" vscode task included in the repo(CTRL+Shift+P)
-4) run the zenoh router in the cloudVM using the command "zenohd"
+4) run the zenoh router in the cloudVM using the command `zenohd`
 5) run the turtle_teleop_key container in the one VM:
-    - docker run -it turtle_teleop_key:test
+    - `docker run -it turtle_teleop_key:test`
 6) run the turtlesim container in the other vm:
-    - docker run turtlesim-headless:test
+    - `docker run turtlesim-headless:test`
     - NOTE: the container runs in headless mode, so no gui will be shown, you can test it is working by looking at the warning messages it creates when the turtle goes out of the playing area (the "clamping" messages).
 7) run this commands on both vms to start the zenoh-bridge-dss containers and connect them to the router:
     - on CloudVM: `docker run --init --net host eclipse/zenoh-bridge-dds -e tcp/<CLOUDVM-IP>:7447`
